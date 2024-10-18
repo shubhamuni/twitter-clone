@@ -1,33 +1,16 @@
 'use client'
-import { useSession, signOut } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { signOut } from "next-auth/react";
+import UsernameForm from "./component/UsernameForm";
+import useUserInfo from "../../hooks/useUserInfo";
 
 export default function Component() {
-  const { data: session, status } = useSession();
-  const [userInfo, setUserInfo] = useState();
-  const [userStatusInfo, setuserStatusInfo] = useState(false)
-  function getUserInfo() {
-    if (status === 'loading') {
-      return;
-    }
-    fetch('/api/users?id=' + session.user.id)
-      .then(response => {
-        response.json().then(json => {
-          console.log(json);
-          setUserInfo(json.user)
-          setuserStatusInfo(true)
-      })
-    })
-  }
-  useEffect(() => {
-    getUserInfo();
-  }, [status])
+  const {userInfo, status: userStatusInfo} = useUserInfo();
   
   if (userStatusInfo === false) {
     return 'Loading user info'
   }
   if (!userInfo?.dfd) {
-    return "No username"
+    return <UsernameForm/>
   }
 
   return (
