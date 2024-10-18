@@ -5,6 +5,7 @@ export default function useUserInfo() {
     const { data: session, status:sessionStatus } = useSession();
     const [userInfo, setUserInfo] = useState();
     const [status, setStatus] = useState(false)
+    
     function getUserInfo() {
         if (sessionStatus === 'loading') {
             return;

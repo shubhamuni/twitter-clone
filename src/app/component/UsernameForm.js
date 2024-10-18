@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import useUserInfo from "../../../hooks/useUserInfo";
 
 export default function UsernameForm() {
-    const { userInfo, status } = useUserInfo(); // Fetch user information from custom hook
+    // Fetch user information from custom hook
+    const { userInfo, status } = useUserInfo();
     const [username, setUsername] = useState('');
 
     useEffect(() => {
