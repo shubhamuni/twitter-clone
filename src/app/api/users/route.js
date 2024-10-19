@@ -40,19 +40,38 @@ export async function GET(request) {
 
 export async function PUT(request) {
     await initMongoose();
-    getServerSession(req,res, authOptions)
-    try {
-        // Assuming the user data is in the request body and needs to be parsed
-        const { username } = await request.json();
-        return new Response(JSON.stringify({ "username is ": username }))
-        
-    } catch (error) {
-        console.error('Error updating user:', error);
-        return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
-            status: 500,
+    // try {
+        // Get the session using the request and auth options
+    // const session = await getServerSession({ req: request, ...authOptions });
+  const session = await getServerSession(requestauthOptions)
+
+        console.log('Session:');
+        // Check if the session exists
+        if (!session) {
+            return new Response(JSON.stringify({ error: "No session found" }), {
+                status: 401,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+        }
+
+        // Optionally, you can perform any additional operations with the session here
+
+        // Return the session data as a response
+        return new Response(JSON.stringify(request), {
+            status: 200,
             headers: {
                 'Content-Type': 'application/json',
             },
         });
-    }
+    // } catch (error) {
+    //     console.error('Error processing PUT request:', error);
+    //     return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
+    //         status: 500,
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //     });
+    // }
 }

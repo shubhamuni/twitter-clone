@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import useUserInfo from "../../../hooks/useUserInfo";
+import { signOut } from "next-auth/react";
 
 export default function UsernameForm() {
     // Fetch user information from custom hook
@@ -50,15 +51,19 @@ export default function UsernameForm() {
     if (status === 'loading') {
         return ''; // Show nothing while loading
     }
-
     return (
         <div className="flex h-screen items-center justify-center">
+            <button
+                className='bg-twitterWhite pl-2 w-20 m-10 text-black rounded-full flex items-center h-14'
+                onClick={() => signOut('google')}>
+                Sign out
+            </button>
             <form className="text-center" onSubmit={handleFormSubmit}>
                 <h1 className="text-xl">Pick a username</h1>
                 <input 
                     type="text" 
                     placeholder="username" 
-                    className="block mb-1 bg-twitterBorder px-3 py-1 rounded-full"
+                    className="block mb-2 bg-twitterBorder px-3 py-1 rounded-full"
                     value={username} 
                     onChange={(e) => setUsername(e.target.value)} 
                 />
