@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation'; 
+import { useRouter } from 'next/navigation';  
 import { useEffect } from 'react';
 import LoginButton from './button';
 import { useSession } from "next-auth/react";
@@ -13,6 +13,9 @@ export default function Component() {
   useEffect(() => {
     if (session) {
       router.push('/');
+    }
+    if (!session) {
+      router.push('/login')
     }
   }, [session, router]); // Run when session or router changes
   

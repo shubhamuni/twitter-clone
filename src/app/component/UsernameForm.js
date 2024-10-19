@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import useUserInfo from "../../../hooks/useUserInfo";
 import { signOut } from "next-auth/react";
+import { useRouter } from 'next/navigation';  
 
 export default function UsernameForm() {
     // Fetch user information from custom hook
     const { userInfo, status } = useUserInfo();
     const [username, setUsername] = useState('');
     const [loading, setLoading] = useState(false); // To manage loading state during fetch
-
+    const router = useRouter();
     useEffect(() => {
-        console.log(userInfo);
-
         // Check if status is still loading, return early if true
         if (status === 'loading') {
             return;
@@ -26,7 +25,6 @@ export default function UsernameForm() {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-
         try {
             const response = await fetch('/api/users', {
                 method: 'PUT',
@@ -51,6 +49,7 @@ export default function UsernameForm() {
     if (status === 'loading') {
         return ''; // Show nothing while loading
     }
+
     return (
         <div className="flex h-screen items-center justify-center">
             <button

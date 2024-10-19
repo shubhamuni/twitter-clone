@@ -43,9 +43,10 @@ export async function PUT(request) {
     // try {
         // Get the session using the request and auth options
     // const session = await getServerSession({ req: request, ...authOptions });
-  const session = await getServerSession(requestauthOptions)
-
-        console.log('Session:');
+    const session = await getServerSession(authOptions)
+    if (session) {
+        return(JSON.stringify(session))
+    }
         // Check if the session exists
         if (!session) {
             return new Response(JSON.stringify({ error: "No session found" }), {
