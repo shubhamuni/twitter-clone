@@ -1,6 +1,8 @@
 // app/api/users/route.js
 import { initMongoose } from '../../../../lib/mongoose'; // Adjust path as necessary
 import User from '../../../../modles/Users';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../auth/[...nextauth]/route';
 
 export async function GET(request) {
     await initMongoose();
@@ -27,6 +29,25 @@ export async function GET(request) {
         });
     } catch (error) {
         console.error('Error fetching user:', error);
+        return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
+            status: 500,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+    }
+}
+
+export async function PUT(request) {
+    await initMongoose();
+    getServerSession(req,res, authOptions)
+    try {
+        // Assuming the user data is in the request body and needs to be parsed
+        const { username } = await request.json();
+        return new Response(JSON.stringify({ "username is ": username }))
+        
+    } catch (error) {
+        console.error('Error updating user:', error);
         return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
             status: 500,
             headers: {

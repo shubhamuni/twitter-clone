@@ -3,7 +3,8 @@ import GoogleProvider from 'next-auth/providers/google';
 import { MongoDBAdapter } from "@auth/mongodb-adapter"
 import client from "./../../../../../lib/db"
 
-export const handler =  NextAuth({
+
+export const authOptions = {
   adapter: MongoDBAdapter(client),
   providers: [
     GoogleProvider({
@@ -25,6 +26,7 @@ export const handler =  NextAuth({
       return session;
     }
   }
-});
+}
+export const handler =  NextAuth(authOptions);
 
 export {handler as GET, handler as POST};
