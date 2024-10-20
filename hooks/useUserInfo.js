@@ -8,7 +8,7 @@ export default function useUserInfo() {
     const [status, setStatus] = useState('loading'); // 'loading', 'authenticated', or 'error'
     const router = useRouter();
 
-    function getUserInfo() {
+  function getUserInfo() {
         if (sessionStatus === 'loading') {
             return;
         }
@@ -32,7 +32,9 @@ export default function useUserInfo() {
                     setStatus('error'); // Set status if there's an error
                 });
         }
-    }
+  }
+  console.log(userInfo);
+  
 
     useEffect(() => {
         getUserInfo();

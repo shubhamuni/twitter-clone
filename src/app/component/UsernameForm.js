@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import useUserInfo from "../../../hooks/useUserInfo";
 import { signOut } from "next-auth/react";
-import { useRouter } from 'next/navigation';  
 
 export default function UsernameForm() {
     // Fetch user information from custom hook
     const { userInfo, status } = useUserInfo();
     const [username, setUsername] = useState('');
-    const [loading, setLoading] = useState(false); // To manage loading state during fetch
-    const router = useRouter();
+    const [loading, setLoading] = useState(false); 
+    
     useEffect(() => {
         // Check if status is still loading, return early if true
         if (status === 'loading') {
@@ -20,7 +19,7 @@ export default function UsernameForm() {
             const defaultUsername = userInfo.email.split('@')[0]; // Get the part of the email before '@'
             setUsername(defaultUsername.replace(/[^a-z]+/gi,'')); // Set the default username based on the email
         }
-    }, [status, userInfo, username]);
+    }, [status, userInfo]);
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
@@ -28,8 +27,8 @@ export default function UsernameForm() {
         try {
             const response = await fetch('/api/users', {
                 method: 'PUT',
-                headers: { 'content-type': 'application/json' },
-                body: JSON.stringify({ username })
+                headers: {'content-type': 'application/json'},
+                body: JSON.stringify({username}),
             });
 
             if (response.ok) {
@@ -37,7 +36,7 @@ export default function UsernameForm() {
                 console.log('User updated successfully:', data);
                 // Optionally update the UI or redirect user
             } else {
-                console.error('Failed to update user:', response.statusText);
+                console.error('Failed to update user:');
             }
         } catch (error) {
             console.error('Error during fetch:', error);
@@ -45,6 +44,8 @@ export default function UsernameForm() {
             setLoading(false);
         }
     };
+    console.log(username);
+    
 
     if (status === 'loading') {
         return ''; // Show nothing while loading

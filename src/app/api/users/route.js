@@ -6,9 +6,11 @@ import { authOptions } from '../auth/[...nextauth]/route';
 
 export async function GET(request) {
     await initMongoose();
-    
+
     const { searchParams } = new URL(request.url);
-    const id = searchParams.get('id'); // Extract the id from the query parameters
+    const id = searchParams.get('id');
+
+    // Extract the id from the query parameters
 
     try {
         const user = await User.findById(id); // Await the result of findById
@@ -40,13 +42,23 @@ export async function GET(request) {
 
 export async function PUT(request) {
     await initMongoose();
+    // const { searchParams } = new URL(request.url);
+    // const username = searchParams.get('username');
+    // const session = await getServerSession(authOptions)
+    // console.log(session);
+    const body = await request.json();
+    const { username } = body;
+
+    return new Response(JSON.stringify( username ), {
+        status: 200,
+        headers: {
+            "Content-Type": 'application/json'
+        }
+    });
     // try {
         // Get the session using the request and auth options
     // const session = await getServerSession({ req: request, ...authOptions });
-    const session = await getServerSession(authOptions)
-    if (session) {
-        return(JSON.stringify(session))
-    }
+    
         // Check if the session exists
         if (!session) {
             return new Response(JSON.stringify({ error: "No session found" }), {
