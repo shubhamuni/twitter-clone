@@ -27,7 +27,8 @@ export default function UsernameForm() {
         try {
             const response = await fetch('/api/users', {
                 method: 'PUT',
-                headers: {'content-type': 'application/json'},
+                headers: { 'content-type': 'application/json' },
+                credentials: "include",
                 body: JSON.stringify({username}),
             });
 

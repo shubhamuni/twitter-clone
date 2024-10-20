@@ -6,10 +6,8 @@ import { authOptions } from '../auth/[...nextauth]/route';
 
 export async function GET(request) {
     await initMongoose();
-
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
-
     // Extract the id from the query parameters
 
     try {
@@ -42,14 +40,12 @@ export async function GET(request) {
 
 export async function PUT(request) {
     await initMongoose();
-    // const { searchParams } = new URL(request.url);
-    // const username = searchParams.get('username');
-    // const session = await getServerSession(authOptions)
+    const session = await getServerSession(authOptions)
     // console.log(session);
     const body = await request.json();
     const { username } = body;
 
-    return new Response(JSON.stringify( username ), {
+    return new Response(JSON.stringify( session ), {
         status: 200,
         headers: {
             "Content-Type": 'application/json'
