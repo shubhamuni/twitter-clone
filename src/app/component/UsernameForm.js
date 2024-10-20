@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import useUserInfo from "../../../hooks/useUserInfo";
 import { signOut } from "next-auth/react";
+import { useRouter } from 'next/navigation';  
 
 export default function UsernameForm() {
     // Fetch user information from custom hook
     const { userInfo, status } = useUserInfo();
     const [username, setUsername] = useState('');
     const [loading, setLoading] = useState(false); 
-    
+    const router = useRouter();
+
     useEffect(() => {
         // Check if status is still loading, return early if true
         if (status === 'loading') {
@@ -35,6 +37,7 @@ export default function UsernameForm() {
             if (response.ok) {
                 const data = await response.json();
                 console.log('User updated successfully:', data);
+                router.push('/login');
                 // Optionally update the UI or redirect user
             } else {
                 console.error('Failed to update user:');
@@ -43,9 +46,10 @@ export default function UsernameForm() {
             console.error('Error during fetch:', error);
         } finally {
             setLoading(false);
+            
         }
     };
-    console.log(username);
+    
     
 
     if (status === 'loading') {

@@ -33,8 +33,7 @@ export default function useUserInfo() {
                 });
         }
   }
-  console.log(userInfo);
-  
+  // console.log(userInfo);
 
     useEffect(() => {
         getUserInfo();

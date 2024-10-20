@@ -40,10 +40,11 @@ export async function GET(request) {
 
 export async function PUT(request) {
     await initMongoose();
-    const session = await getServerSession()
+    const session = await getServerSession(authOptions)
     // console.log(session);
     const body = await request.json();
     const { username } = body;
+    await User.findByIdAndUpdate(session.user.id, {username}) 
 
     return new Response(JSON.stringify( session ), {
         status: 200,
