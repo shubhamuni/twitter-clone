@@ -40,7 +40,7 @@ export async function GET(request) {
 
 export async function PUT(request) {
     await initMongoose();
-    const session = await getServerSession(authOptions)
+    const session = await getServerSession()
     // console.log(session);
     const body = await request.json();
     const { username } = body;
