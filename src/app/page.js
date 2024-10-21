@@ -1,12 +1,30 @@
 'use client'
-import { signOut } from "next-auth/react";
 import UsernameForm from "./component/UsernameForm";
 import useUserInfo from "../../hooks/useUserInfo";
 import PostForm from "./component/PostForm";
+import { useState } from "react";
 
 
 export default function Component() {
-  const {userInfo, status: userStatusInfo} = useUserInfo();
+  const { userInfo, status: userStatusInfo } = useUserInfo();
+  const [post, setPost] = useState();
+
+  useEffect(() => {
+    fetch('/api/posts')
+      .then(response => response.json())
+      .then(json => {
+        setPost(json); // Set status when authenticated
+      })
+      .catch(error => {
+        console.error('Error fetching user info:', error);
+        setStatus('error'); // Set status if there's an error
+      }
+      );
+  }, [])
+
+    console.log(post);
+    
+  
   
   if (userStatusInfo === false) {
     return 'Loading user info'
