@@ -4,6 +4,10 @@ import useUserInfo from "../../hooks/useUserInfo";
 import PostForm from "./component/PostForm";
 import { useState, useEffect } from "react";
 import PostContent from "./component/PostContent";
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en';
+
+TimeAgo.addDefaultLocale(en);
 
 
 export default function Component() {

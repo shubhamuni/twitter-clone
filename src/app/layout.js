@@ -1,11 +1,8 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import SessionWrapper from "./component/SessionWrapper";
-import * as React from 'react';
-import * as timeago from 'timeago.js';
-import vi from 'timeago.js/lib/lang/vi';
 
-timeago.register('vi', vi);
+
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
