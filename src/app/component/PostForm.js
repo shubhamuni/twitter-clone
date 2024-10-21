@@ -1,6 +1,7 @@
 import Image from 'next/image'; // Import the Next.js Image component
 import useUserInfo from '../../../hooks/useUserInfo';
 import { useState } from 'react';
+import Avatar from './Avatar';
 
 export default function PostForm({ onPost }) {
     const { userInfo, status } = useUserInfo();
@@ -47,16 +48,7 @@ export default function PostForm({ onPost }) {
     return (
         <form className="mx-5" onSubmit={handlePostSubmit}>
             <div className="flex">
-                <div className="rounded-full overflow-hidden w-12 h-12">
-                    <Image 
-                        src={userInfo?.image || '/google.png'} 
-                        alt="avatar"
-                        width={48}  // Avatar size (48x48 pixels)
-                        height={48} 
-                        className="object-cover"
-                    />
-                </div>
-
+                <Avatar src={userInfo?.image}/>
                 {/* Post input area */}
                 <div className="grow pl-4">
                     <textarea 

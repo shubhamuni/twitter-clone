@@ -25,7 +25,6 @@ export default function Component() {
   useEffect(() => {
     fetchPost();
   }, [])
-  console.log(posts);
   
   
   
@@ -43,18 +42,9 @@ export default function Component() {
       <PostForm onPost={fetchPost}/>
       <div className="text-twitterWhite">{posts.length > 0 && posts.map((post, index) => (
         <div className="text-twitterWhite border-t border-twitterBorder p-5" key={index}>
-          <PostContent text={post.text}/>
+          <PostContent {...post} />
         </div>
       ))}</div>
     </div>
   )
-}
-{/* <div className="flex items-center justify-center h-screen">
-      <span>Signed in as {userInfo.username}</span>
-      {/* No need to pass 'google' to signOut */}
-      // <button
-      //   className='bg-twitterWhite pl-2 w-20 m-10 text-black rounded-full flex items-center h-14'
-      //   onClick={() => signOut('google')}>
-      //   Sign out
-      // </button>
-    // </div> */}
+};
