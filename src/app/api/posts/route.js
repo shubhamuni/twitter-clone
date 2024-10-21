@@ -7,31 +7,35 @@ import { authOptions } from "../auth/[...nextauth]/route";
 export async function GET() {
     await initMongoose();
     try {
-        const post = await Post.find().sort({createdAt: -1}).exec(); // Await the result of findById
-        if (!post) {
-            return new Response(JSON.stringify({ error: 'User not found' }), {
-                status: 404,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-        }
+    const posts = await Post.find()
+      .populate('author') // Ensure 'author' refers to the User model
+      .sort({ createdAt: -1 }) // Ensure that createdAt is properly set in the Post schema
+      .exec();
 
-        return new Response(JSON.stringify(post), {
-            status: 200,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-    } catch (error) {
-        console.error('Error fetching user:', error);
-        return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
-            status: 500,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+    if (!posts || posts.length === 0) {
+      return new Response(JSON.stringify({ error: 'No posts found' }), {
+        status: 404,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
     }
+
+    return new Response(JSON.stringify(posts), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
+      status: 500,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }
 }
 
 export async function POST(request) {

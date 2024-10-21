@@ -1,6 +1,6 @@
 // app/api/users/route.js
 import { initMongoose } from '../../../../lib/mongoose'; // Adjust path as necessary
-import User from '../../../../modles/Users';
+import User from '../../../../modles/User';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]/route';
 
