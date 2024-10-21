@@ -7,7 +7,7 @@ import { authOptions } from "../auth/[...nextauth]/route";
 export async function GET() {
     await initMongoose();
     try {
-        const post = await Post.find().exec(); // Await the result of findById
+        const post = await Post.find().sort({createdAt: -1}).exec(); // Await the result of findById
         if (!post) {
             return new Response(JSON.stringify({ error: 'User not found' }), {
                 status: 404,

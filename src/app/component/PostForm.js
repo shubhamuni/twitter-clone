@@ -2,7 +2,7 @@ import Image from 'next/image'; // Import the Next.js Image component
 import useUserInfo from '../../../hooks/useUserInfo';
 import { useState } from 'react';
 
-export default function PostForm() {
+export default function PostForm({onPost}) {
     const { userInfo, status } = useUserInfo();
     const [text, setText] = useState('');
 
@@ -33,6 +33,9 @@ export default function PostForm() {
         } else {
             console.error('Failed to create post:', response.statusText);
         }
+        if (onPost) {
+            onPost();
+        }
     }
     catch (error) {
             console.error('Error during fetch:', error);
@@ -62,7 +65,7 @@ export default function PostForm() {
             />
           </div>
         </div>
-        <div className="text-right mt-2 pb-4">
+        <div className="text-right mt-2 pb-2">
           <button 
             type="submit" 
             className="bg-twitterBlue text-white rounded-full px-4 py-2 font-bold hover:bg-twitterDarkBlue"

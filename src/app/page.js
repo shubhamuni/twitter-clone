@@ -38,7 +38,11 @@ export default function Component() {
     <div className="max-w-lg mx-auto border-l border-r border-twitterBorder min-h-screen">
       <h1 className="text-lg font-bold p-4">Home</h1>
       <PostForm />
-      <div className="text-twitterWhite pt-10 border-t-4">Text is :{posts[0].text}</div>
+      <div className="text-twitterWhite">{posts.length > 0 && posts.map((post, index) => (
+        <div className="text-twitterWhite border-t border-twitterBorder p-5" key={index}>
+          {post.text}
+        </div>
+      ))}</div>
     </div>
   )
 }
