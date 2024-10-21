@@ -9,7 +9,7 @@ export default function Component() {
   const { userInfo, status: userStatusInfo } = useUserInfo();
   const [posts, setPost] = useState([]);
 
-  useEffect(() => {
+  const fetchPost = () => {
     fetch('/api/posts')
       .then(response => response.json())
       .then(json => {
@@ -20,9 +20,10 @@ export default function Component() {
         setStatus('error'); // Set status if there's an error
       }
       );
+  }
+  useEffect(() => {
+    fetchPost();
   }, [])
-
-    console.log(posts);
     
   
   
@@ -37,7 +38,7 @@ export default function Component() {
   return (
     <div className="max-w-lg mx-auto border-l border-r border-twitterBorder min-h-screen">
       <h1 className="text-lg font-bold p-4">Home</h1>
-      <PostForm />
+      <PostForm onPost={fetchPost}/>
       <div className="text-twitterWhite">{posts.length > 0 && posts.map((post, index) => (
         <div className="text-twitterWhite border-t border-twitterBorder p-5" key={index}>
           {post.text}
