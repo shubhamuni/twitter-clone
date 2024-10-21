@@ -3,6 +3,7 @@ import UsernameForm from "./component/UsernameForm";
 import useUserInfo from "../../hooks/useUserInfo";
 import PostForm from "./component/PostForm";
 import { useState, useEffect } from "react";
+import PostContent from "./component/PostContent";
 
 
 export default function Component() {
@@ -24,7 +25,8 @@ export default function Component() {
   useEffect(() => {
     fetchPost();
   }, [])
-    
+  console.log(posts);
+  
   
   
   if (userStatusInfo === false) {
@@ -41,7 +43,7 @@ export default function Component() {
       <PostForm onPost={fetchPost}/>
       <div className="text-twitterWhite">{posts.length > 0 && posts.map((post, index) => (
         <div className="text-twitterWhite border-t border-twitterBorder p-5" key={index}>
-          {post.text}
+          <PostContent text={post.text}/>
         </div>
       ))}</div>
     </div>

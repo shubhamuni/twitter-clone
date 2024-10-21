@@ -56,8 +56,8 @@ export async function POST(request) {
 
         // // Find the user by the session user ID and update their username
          const createPost = await Post.create({
-             auher: session.user.id,
-             text
+             author: session.user.id,
+             text,
          })
 
         // // Check if the user was found and updated
@@ -72,7 +72,7 @@ export async function POST(request) {
 
         // Return the updated user data as a response
         
-         return new Response(JSON.stringify({createPost}), {
+         return new Response(JSON.stringify(createPost), {
             status: 200,
             headers: {
                 'Content-Type': 'application/json',

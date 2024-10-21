@@ -1,7 +1,7 @@
 import mongoose, { model, models, Schema } from "mongoose";
 
 const PostSchema = new Schema({
-    author: { type: mongoose.Types.ObjectId, ref: 'User' }, // Reference to the User model
+    author: { type: mongoose.Types.ObjectId, ref: 'Users' }, // Reference to the User model
     text: { type: String, required: true }                  // Text field with validation
 }, {
         timestamps: true
