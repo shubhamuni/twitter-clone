@@ -2,7 +2,7 @@
 import { signOut } from "next-auth/react";
 import UsernameForm from "./component/UsernameForm";
 import useUserInfo from "../../hooks/useUserInfo";
-import Image from 'next/image'; // Import the Next.js Image component
+import PostForm from "./component/PostForm";
 
 
 export default function Component() {
@@ -19,28 +19,7 @@ export default function Component() {
   return (
     <div className="max-w-lg mx-auto border-l border-r border-twitterBorder min-h-screen">
       <h1 className="text-lg font-bold p-4">Home</h1>
-      <form className="mx-5">
-        <div className="flex">
-          <div className="rounded-full overflow-hidden w-12 h-12">
-            <Image 
-              src={userInfo?.image || '/google.png'} 
-              alt="avatar"
-              width={48}  // Avatar size (48x48 pixels)
-              height={48} 
-              className="object-cover"
-            />
-          </div>
-
-          {/* Post input area */}
-          <div className="grow pl-4">
-            <textarea 
-              className="w-full resize-none border-none focus:ring-0 text-lg" 
-              placeholder="What's happening?"
-              rows="3"
-            />
-          </div>
-        </div>
-      </form>
+      <PostForm />
     </div>
   )
 }
