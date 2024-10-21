@@ -3,6 +3,37 @@ import { initMongoose } from "../../../../lib/mongoose";
 import Post from "../../../../modles/Post";
 import { authOptions } from "../auth/[...nextauth]/route";
 
+
+export async function GET() {
+    await initMongoose();
+    try {
+        const post = await Post.find().exec(); // Await the result of findById
+        if (!post) {
+            return new Response(JSON.stringify({ error: 'User not found' }), {
+                status: 404,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+        }
+
+        return new Response(JSON.stringify(post), {
+            status: 200,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+    } catch (error) {
+        console.error('Error fetching user:', error);
+        return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
+            status: 500,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+    }
+}
+
 export async function POST(request) {
     await initMongoose();
     const body = await request.json();

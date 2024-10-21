@@ -2,12 +2,12 @@
 import UsernameForm from "./component/UsernameForm";
 import useUserInfo from "../../hooks/useUserInfo";
 import PostForm from "./component/PostForm";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
 export default function Component() {
   const { userInfo, status: userStatusInfo } = useUserInfo();
-  const [post, setPost] = useState();
+  const [posts, setPost] = useState([]);
 
   useEffect(() => {
     fetch('/api/posts')
@@ -22,7 +22,7 @@ export default function Component() {
       );
   }, [])
 
-    console.log(post);
+    console.log(posts);
     
   
   
@@ -38,6 +38,7 @@ export default function Component() {
     <div className="max-w-lg mx-auto border-l border-r border-twitterBorder min-h-screen">
       <h1 className="text-lg font-bold p-4">Home</h1>
       <PostForm />
+      <div className="text-twitterWhite pt-10 border-t-4">Text is :{posts[0].text}</div>
     </div>
   )
 }
