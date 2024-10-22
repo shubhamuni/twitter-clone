@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import PostContent from "./component/PostContent";
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en';
+import Layout from "./component/Layout";
 
 TimeAgo.addDefaultLocale(en);
 
@@ -41,7 +42,7 @@ export default function Component() {
 
 
   return (
-    <div className="max-w-lg mx-auto border-l border-r border-twitterBorder min-h-screen">
+    <Layout>
       <h1 className="text-lg font-bold p-4">Home</h1>
       <PostForm onPost={fetchPost}/>
       <div className="text-twitterWhite">{posts.length > 0 && posts.map((post, index) => (
@@ -49,6 +50,6 @@ export default function Component() {
           <PostContent {...post} />
         </div>
       ))}</div>
-    </div>
+    </Layout>
   )
 };
