@@ -4,39 +4,54 @@ import Post from "../../../../modles/Post";
 import { authOptions } from "../auth/[...nextauth]/route";
 
 
-export async function GET() {
-    await initMongoose();
-    try {
+export async function GET(request) {
+  await initMongoose();
+
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get('id');
+
+  try {
     const posts = await Post.find()
       .populate('author') // Ensure 'author' refers to the User model
       .sort({ createdAt: -1 }) // Ensure that createdAt is properly set in the Post schema
       .exec();
 
+    if (id) {
+      const post = await Post.findById(id)
+        .populate('author') // Ensure 'author' refers to the User model
+        .exec();;
+      if (!post) {
+        return new Response(JSON.stringify({ error: 'Post not found' }), {
+          status: 404,
+          headers: { 'Content-Type': 'application/json' },
+        });
+      }
+      return new Response(JSON.stringify({post}), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
     if (!posts || posts.length === 0) {
       return new Response(JSON.stringify({ error: 'No posts found' }), {
         status: 404,
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
       });
     }
 
     return new Response(JSON.stringify(posts), {
       status: 200,
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
     });
   } catch (error) {
     console.error('Error fetching posts:', error);
     return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
       status: 500,
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
     });
   }
 }
+
 
 export async function POST(request) {
     await initMongoose();
