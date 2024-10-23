@@ -4,7 +4,6 @@ import Layout from "@/app/component/Layout";
 import PostContent from "@/app/component/PostContent";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { use } from 'react'; // Import `use` hook
 
 export default function Page({ params }) {
     const [post, setPost] = useState('');
