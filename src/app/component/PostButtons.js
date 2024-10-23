@@ -13,10 +13,12 @@ export default function PostButtons({ likesCount:likesCountdefault= 0, likeByMe:
             body: JSON.stringify({id}), // Convert id to JSON format
         });
         const data = await response.json();
-        if (data.isLiked) {
+        if (data.like) {
             setLikesCount(prev => prev + 1)
+            setLikeByMe((true))
         } else {
-            setLikesCount(prev => prev -1)
+            setLikesCount(prev => prev - 1)
+            
         }
         console.log(data);
         
