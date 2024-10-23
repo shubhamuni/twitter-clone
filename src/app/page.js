@@ -7,14 +7,20 @@ import PostContent from "./component/PostContent";
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en';
 import Layout from "./component/Layout";
+import { signOut } from "next-auth/react";
 
 TimeAgo.addDefaultLocale(en);
 
 
 export default function Component() {
-  const { userInfo, status: userStatusInfo } = useUserInfo();
+  const { userInfo, setUserInfo, status: userStatusInfo } = useUserInfo();
   const [posts, setPost] = useState([]);
   const [idsLikedByMe, setIdsLikedByMe] = useState([]);
+
+  async function logout() {
+    setUserInfo(null);
+    await signOut();
+}
 
   const fetchPost = () => {
     fetch('/api/posts')
@@ -29,6 +35,7 @@ export default function Component() {
       }
       );
   }
+
   useEffect(() => {
     fetchPost();
   }, [])
@@ -52,6 +59,11 @@ export default function Component() {
           <PostContent {...post} likedByMe={idsLikedByMe.includes(post._id)} />
         </div>
       ))}</div>
+      {userInfo && <div className="text-center border-t border-twitterBorder p-5">
+        <button onClick={logout} className="bg-twitterWhite text-twitterDarkGray px-5 py-2 rounded-full">
+          Logout
+        </button>
+      </div>}
     </Layout>
   )
 };
