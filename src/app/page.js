@@ -14,12 +14,14 @@ TimeAgo.addDefaultLocale(en);
 export default function Component() {
   const { userInfo, status: userStatusInfo } = useUserInfo();
   const [posts, setPost] = useState([]);
+  const [idsLikedByMe, setIdsLikedByMe] = useState([]);
 
   const fetchPost = () => {
     fetch('/api/posts')
       .then(response => response.json())
       .then(json => {
-        setPost(json); // Set status when authenticated
+        setPost(json.posts);
+        setIdsLikedByMe(json.idsLikedByMe)// Set status when authenticated
       })
       .catch(error => {
         console.error('Error fetching user info:', error);
@@ -47,7 +49,7 @@ export default function Component() {
       <PostForm onPost={fetchPost}/>
       <div className="text-twitterWhite">{posts.length > 0 && posts.map((post, index) => (
         <div className="text-twitterWhite border-t border-twitterBorder p-5" key={index}>
-          <PostContent {...post} />
+          <PostContent {...post} likedByMe={idsLikedByMe.includes(post._id)} />
         </div>
       ))}</div>
     </Layout>

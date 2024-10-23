@@ -20,7 +20,7 @@ export async function POST(request) {
     try {
         const existingLike = await Like.findOne({ author: UserId, post: postId })
         if (existingLike) {
-            await existingLike.remove();
+            await existingLike.deleteOne({id:postId})
             await updateLikesCount(postId);
             return new Response(JSON.stringify(null), {
                 status: 200,

@@ -4,7 +4,7 @@ import ReactTimeAgo from 'react-time-ago';
 import Link from 'next/link';
 import PostButtons from './PostButtons';
 
-export default function PostContent({ text, author, createdAt, _id, big=false }) {
+export default function PostContent({ text, author, createdAt, _id,likesCount, big=false, likedByMe }) {
     const createdAtdate = new Date(createdAt)
     return (
         <div>
@@ -28,7 +28,7 @@ export default function PostContent({ text, author, createdAt, _id, big=false })
                         <Link href={`/${author.username}/status/${_id}`}>
                         {text}
                             </Link>
-                            <PostButtons id={_id}/>
+                            <PostButtons id={_id} likesCount={likesCount} likedByMe={likedByMe}/>
                     </div>
                     )}
                 </div>
@@ -41,7 +41,7 @@ export default function PostContent({ text, author, createdAt, _id, big=false })
                     <div className='text-twitterLightGray text-sm'>
                         {createdAtdate.toISOString().replace('T',' ').slice(0,16).split(' ').reverse().join(' ')}
                 </div>    
-            <PostButtons id={_id}/>
+            <PostButtons id={_id} likesCount={likesCount} likedByMe={likedByMe}/>
             </div>
             )}
         </div>

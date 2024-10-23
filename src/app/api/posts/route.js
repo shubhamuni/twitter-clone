@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { initMongoose } from "../../../../lib/mongoose";
 import Post from "../../../../modles/Post";
 import { authOptions } from "../auth/[...nextauth]/route";
+import Like from "../../../../modles/Like";
 
 
 export async function GET(request) {
@@ -11,11 +12,15 @@ export async function GET(request) {
   const id = searchParams.get('id');
 
   try {
+    const session = await getServerSession({ req: request, ...authOptions });
     const posts = await Post.find()
       .populate('author') // Ensure 'author' refers to the User model
       .sort({ createdAt: -1 }) // Ensure that createdAt is properly set in the Post schema
+      .limit(20)
       .exec();
 
+    const postsLikedByMe = Like.find({author:session.user.id,post:posts.map(p => p._id)});
+    const idsLikedByMe = (await postsLikedByMe).map(like => like.post);
     if (id) {
       const post = await Post.findById(id)
         .populate('author') // Ensure 'author' refers to the User model
@@ -26,7 +31,7 @@ export async function GET(request) {
           headers: { 'Content-Type': 'application/json' },
         });
       }
-      return new Response(JSON.stringify({post}), {
+      return new Response(JSON.stringify(post), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },
       });
@@ -39,7 +44,7 @@ export async function GET(request) {
       });
     }
 
-    return new Response(JSON.stringify(posts), {
+    return new Response(JSON.stringify({ posts, idsLikedByMe}), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
