@@ -10,7 +10,7 @@ export default function Page({ params }) {
     const [post, setPost] = useState('');
 
     // Await the params Promise using `use()`
-    const { id } = use(params);
+    const { id } = params;
 
     const fetchPost = async () => {
         try {

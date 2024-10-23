@@ -19,7 +19,7 @@ export async function GET(request) {
     if (id) {
       const post = await Post.findById(id)
         .populate('author') // Ensure 'author' refers to the User model
-        .exec();;
+        .exec();
       if (!post) {
         return new Response(JSON.stringify({ error: 'Post not found' }), {
           status: 404,
