@@ -1,18 +1,25 @@
 import { useState } from "react"
 
-export default function PostButtons({ likesCount:likesCountdefault= 0, likeByMe:likedByMeDefault=false }) {
+export default function PostButtons({ likesCount:likesCountdefault= 0, likeByMe:likedByMeDefault=false, id }) {
     const [likesCount, setLikesCount] = useState(likesCountdefault);
-    const [likeByMe, setLikeByMe] = useState(true);
+    const [likeByMe, setLikeByMe] = useState(likedByMeDefault);
 
-    async function like() {
+    async function toggleLike() {
         const response = await fetch('/api/like', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(id), // Convert id to JSON format
+            body: JSON.stringify({id}), // Convert id to JSON format
         });
         const data = await response.json();
+        if (data.isLiked) {
+            setLikesCount(prev => prev + 1)
+        } else {
+            setLikesCount(prev => prev -1)
+        }
+        console.log(data);
+        
     }
     return (
         <div className="flex justify-between mr-12 text-twitterLightGray text-sm mt-1">
@@ -28,7 +35,7 @@ export default function PostButtons({ likesCount:likesCountdefault= 0, likeByMe:
                 </svg>
                 <span>1</span>
             </button>
-            <button className={(likeByMe ? 'text-red-500 fill-red-500 ' : '') +"flex"} onClick={like}>
+            <button className={(likeByMe ? 'text-red-500 fill-red-500 ' : '') +"flex"} onClick={toggleLike}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5 mr-1 fill-inherit">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
                 </svg>

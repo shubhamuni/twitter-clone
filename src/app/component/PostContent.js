@@ -6,7 +6,6 @@ import PostButtons from './PostButtons';
 
 export default function PostContent({ text, author, createdAt, _id, big=false }) {
     const createdAtdate = new Date(createdAt)
-
     return (
         <div>
             <div className="text-twitterWhite flex w-full">
@@ -29,7 +28,7 @@ export default function PostContent({ text, author, createdAt, _id, big=false })
                         <Link href={`/${author.username}/status/${_id}`}>
                         {text}
                             </Link>
-                            <PostButtons/>
+                            <PostButtons id={_id}/>
                     </div>
                     )}
                 </div>
@@ -42,7 +41,7 @@ export default function PostContent({ text, author, createdAt, _id, big=false })
                     <div className='text-twitterLightGray text-sm'>
                         {createdAtdate.toISOString().replace('T',' ').slice(0,16).split(' ').reverse().join(' ')}
                 </div>    
-            <PostButtons/>
+            <PostButtons id={_id}/>
             </div>
             )}
         </div>
