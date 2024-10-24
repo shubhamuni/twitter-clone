@@ -4,7 +4,10 @@ import ReactTimeAgo from 'react-time-ago';
 import Link from 'next/link';
 import PostButtons from './PostButtons';
 
-export default function PostContent({ text, author, createdAt, _id,likesCount, big=false, likedByMe }) {
+export default function PostContent({ text, author, createdAt, _id, likesCount, big=false, likedByMe }) {
+
+    console.log(big);
+    
     const createdAtdate = new Date(createdAt)
     return (
         <div>
