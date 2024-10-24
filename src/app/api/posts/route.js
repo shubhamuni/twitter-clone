@@ -31,7 +31,7 @@ export async function GET(request) {
           headers: { 'Content-Type': 'application/json' },
         });
       }
-      return new Response(JSON.stringify(post), {
+      return new Response(JSON.stringify({post}), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },
       });
