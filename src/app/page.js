@@ -28,6 +28,8 @@ export default function Component() {
       .then(json => {
         setPost(json.posts);
         setIdsLikedByMe(json.idsLikedByMe)// Set status when authenticated
+        console.log(json.posts);
+        
       })
       .catch(error => {
         console.error('Error fetching user info:', error);
