@@ -52,7 +52,7 @@ export default function Component() {
 
   return (
     <Layout>
-      <h1 className="text-lg font-bold p-4">Home</h1>
+      <h1 className="text-lg font-bold p-2  mt-1">Home</h1>
       <PostForm onPost={fetchPost}/>
       <div className="text-twitterWhite">{posts.length > 0 && posts.map((post, index) => (
         <div className="text-twitterWhite border-t border-twitterBorder p-5" key={index}>
