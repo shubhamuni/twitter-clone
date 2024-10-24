@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import LoginButton from './button';
 import { useSession } from "next-auth/react";
+import LoadingIcons from 'react-loading-icons';
 
 export default function Component() {
   const { data: session, status } = useSession();
@@ -17,13 +18,16 @@ export default function Component() {
     if (!session) {
       router.push('/login')
     }
-  }, [session, router]); // Run when session or router changes
+  }, [session, router, status]); // Run when session or router changes
+  
+  console.log(status);
   
   if (status === 'loading') {
-    return <div>Loading...</div>; // Better handling for loading state
-  }
-  
-  return (
+    return <div className='flex items-center justify-center h-screen'>
+      <LoadingIcons.Circles />
+    </div> ; // Better handling for loading state
+  } else if (status === 'unauthenticated') {
+    return (
     <div>
         <div className="flex items-center justify-center h-screen">
           <div>
@@ -32,4 +36,6 @@ export default function Component() {
         </div>
     </div>
   );
+  }
+  return null
 }
