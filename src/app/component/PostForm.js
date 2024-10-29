@@ -3,7 +3,7 @@ import useUserInfo from '../../../hooks/useUserInfo';
 import { useState } from 'react';
 import Avatar from './Avatar';
 
-export default function PostForm({ onPost }) {
+export default function PostForm({ onPost, compact, placeholder='What\'s happening' }) {
     const { userInfo, status } = useUserInfo();
     const [text, setText] = useState('');
 
@@ -47,26 +47,38 @@ export default function PostForm({ onPost }) {
 
     return (
         <form className="mx-5" onSubmit={handlePostSubmit}>
-            <div className="flex">
-                <Avatar src={userInfo?.image}/>
+            <div className={(compact ? 'items-center' : "") + " flex"}>
+                <div>
+                    <Avatar src={userInfo?.image}/>
+                </div>
                 {/* Post input area */}
                 <div className="grow pl-4">
                     <textarea 
-                        className="w-full resize-none border-none focus:ring-0 text-lg bg-transparent text-twitterWhite" 
+                        className={(compact ? 'h-10 pt-1' : 'h-24')+" w-full resize-none border-none focus:ring-0 text-lg bg-transparent text-twitterWhite"} 
                         value={text}
                         onChange={e => setText(e.target.value)}
-                        placeholder="What's happening?"
+                        placeholder={placeholder}
                         rows="3"
                     />
+                    {!compact && (
+                    <div className="text-right border-t  border-twitterBorder pt-2 pb-2">
+                        <button 
+                            type="submit" 
+                            className=" bg-twitterBlue text-white rounded-full px-4 py-2 font-bold hover:bg-twitterDarkBlue">
+                            Post
+                        </button>
+                    </div>
+                    )}
                 </div>
-            </div>
-            <div className="text-right mt-2 pb-2">
-                <button 
-                    type="submit" 
-                    className=" bg-twitterBlue text-white rounded-full px-4 py-2 font-bold hover:bg-twitterDarkBlue"
-                >
-                    Post
-                </button>
+                {compact && (
+                    <div className='pl-2'>
+                        <button 
+                            type="submit" 
+                            className=" bg-twitterBlue text-white rounded-full px-4 py-2 font-bold hover:bg-twitterDarkBlue">
+                            Reply
+                        </button>
+                    </div>
+                )}
             </div>
         </form>  
     );

@@ -2,11 +2,14 @@
 
 import Layout from "@/app/component/Layout";
 import PostContent from "@/app/component/PostContent";
+import PostForm from "@/app/component/PostForm";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import useUserInfo from "../../../../../hooks/useUserInfo";
 
 export default function Page({ params }) {
     const [post, setPost] = useState('');
+    const { userInfo } = useUserInfo();
 
     // Await the params Promise using `use()`
     const { id } = params;
@@ -41,6 +44,11 @@ export default function Page({ params }) {
                     </Link>
                     <PostContent {...post} big={true} />
                 </div>
+            )}
+            {userInfo && (
+            <div className="border-t border-twitterBorder py-5">
+                <PostForm  compact placeholder="Tweet your reply"/>
+            </div>
             )}
         </Layout>
     );

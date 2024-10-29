@@ -7,6 +7,7 @@ import PostButtons from './PostButtons';
 export default function PostContent({ text, author, createdAt, _id, likesCount, big=false, likedByMe }) {
 
     console.log(big);
+    console.log(likedByMe)
     
     const createdAtdate = new Date(createdAt)
     return (
