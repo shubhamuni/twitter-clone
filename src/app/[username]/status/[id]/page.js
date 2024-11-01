@@ -7,12 +7,19 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import useUserInfo from "../../../../../hooks/useUserInfo";
 
-export default function Page({ params }) {
+export default function Page({ params: asyncParams }) {
     const [post, setPost] = useState('');
     const { userInfo } = useUserInfo();
+    const [id, setId] = useState(null);
 
-    // Await the params Promise using `use()`
-    const { id } = params;
+    useEffect(() => {
+        // Await params and set id once resolved
+        async function fetchParams() {
+            const resolvedParams = await asyncParams;
+            setId(resolvedParams.id);
+        }
+        fetchParams();
+    }, [asyncParams]);
 
     const fetchPost = async () => {
         try {
@@ -26,18 +33,17 @@ export default function Page({ params }) {
     };
 
     useEffect(() => {
-        fetchPost();
-    }, [id]); // Add id as a dependency
+        if (id) fetchPost();
+    }, [id]); // Only run if id is defined
 
     return (
         <Layout>
             {post && (
                 <div className="px-5 py-2">
-                    
                     <Link href={'/'}>
                         <div className="flex mb-5 cursor-pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mr-3">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                             </svg>
                             Tweet
                         </div>
@@ -46,9 +52,9 @@ export default function Page({ params }) {
                 </div>
             )}
             {userInfo && (
-            <div className="border-t border-twitterBorder py-5">
-                <PostForm  compact placeholder="Tweet your reply"/>
-            </div>
+                <div className="border-t border-twitterBorder py-5">
+                    <PostForm compact placeholder="Tweet your reply"/>
+                </div>
             )}
         </Layout>
     );
