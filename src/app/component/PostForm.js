@@ -3,7 +3,7 @@ import useUserInfo from '../../../hooks/useUserInfo';
 import { useState } from 'react';
 import Avatar from './Avatar';
 
-export default function PostForm({ onPost, compact, placeholder='What\'s happening' }) {
+export default function PostForm({ onPost,parent, compact, placeholder='What\'s happening' }) {
     const { userInfo, status } = useUserInfo();
     const [text, setText] = useState('');
 
@@ -19,7 +19,7 @@ export default function PostForm({ onPost, compact, placeholder='What\'s happeni
             const response = await fetch('/api/posts', {
                 method: 'POST',
                 headers: { 'content-type': 'application/json' },
-                body: JSON.stringify({ text }), // Send the 'text' in the request body
+                body: JSON.stringify({ text, parent }), // Send the 'text' in the request body
             });
 
             if (response.ok) {

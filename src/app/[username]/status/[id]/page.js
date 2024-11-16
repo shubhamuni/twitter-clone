@@ -56,6 +56,7 @@ export default function Page({ params: asyncParams }) {
                     <PostForm compact placeholder="Tweet your reply"/>
                 </div>
             )}
+            <div>replies go here</div>
         </Layout>
     );
 }
