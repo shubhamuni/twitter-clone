@@ -53,7 +53,9 @@ export default function Page({ params: asyncParams }) {
             )}
             {userInfo && (
                 <div className="border-t border-twitterBorder py-5">
-                    <PostForm compact placeholder="Tweet your reply"/>
+                    <PostForm compact placeholder="Tweet your reply"
+                        parent={id}
+                    />
                 </div>
             )}
             <div>replies go here</div>
