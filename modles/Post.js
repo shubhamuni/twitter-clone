@@ -13,3 +13,38 @@ const PostSchema = new Schema({
 const Post = models.Post || model('Post', PostSchema);
 
 export default Post;
+
+
+
+/*
+
+overrides {
+    nth-check: {
+            postcss: "5.8.1"
+        },
+    nodemon: {
+        pixer: "2.2.1"
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*/
