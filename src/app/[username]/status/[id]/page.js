@@ -11,9 +11,10 @@ export default function Page({ params: asyncParams }) {
     const [post, setPost] = useState('');
     const { userInfo } = useUserInfo();
     const [id, setId] = useState(null);
+    const [respon, setResponse] = useState([]);
+    const [repliesLikedByMe, setRepliesLikedByMe] = useState([]);
 
     useEffect(() => {
-        // Await params and set id once resolved
         async function fetchParams() {
             const resolvedParams = await asyncParams;
             setId(resolvedParams.id);
@@ -26,15 +27,25 @@ export default function Page({ params: asyncParams }) {
             const response = await fetch(`/api/posts?id=${id}`);
             const json = await response.json();
             setPost(json.post);
-            console.log(json.post); // For debugging
+
+            const reply = await fetch(`/api/posts?parent=${id}`);
+            const replay = await reply.json();
+
+            console.log('Fetched replies:', replay.posts); // Log fetched data
+            setResponse(replay.posts); // Update state with fetched data
         } catch (error) {
-            console.error('Error fetching post:', error); // Error handling
+            console.error('Error fetching post or replies:', error);
         }
     };
 
+    // Log the updated response state
+    useEffect(() => {
+        console.log('Response state updated:', respon);
+    }, [respon]);
+
     useEffect(() => {
         if (id) fetchPost();
-    }, [id]); // Only run if id is defined
+    }, [id]);
 
     return (
         <Layout>
@@ -53,12 +64,16 @@ export default function Page({ params: asyncParams }) {
             )}
             {userInfo && (
                 <div className="border-t border-twitterBorder py-5">
-                    <PostForm compact placeholder="Tweet your reply"
-                        parent={id}
-                    />
+                    <PostForm compact placeholder="Tweet your reply" parent={id} />
                 </div>
             )}
-            <div>replies go here</div>
+            <div>
+                {respon.length && respon.map((r) => {
+                    return <div key={r._id}>
+                        <PostContent {...r} />
+                    </div>
+                })}
+               </div>
         </Layout>
     );
 }

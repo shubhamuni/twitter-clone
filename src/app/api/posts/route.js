@@ -13,7 +13,7 @@ export async function GET(request) {
 
   try {
     const session = await getServerSession({ req: request, ...authOptions });
-    const posts = await Post.find({parent:null})
+    const posts = await Post.find({parent:null })
       .populate('author') // Ensure 'author' refers to the User model
       .sort({ createdAt: -1 }) // Ensure that createdAt is properly set in the Post schema
       .limit(20)

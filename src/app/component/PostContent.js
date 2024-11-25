@@ -30,7 +30,7 @@ export default function PostContent({ text, author, createdAt, _id, likesCount, 
                     {!big && (
                     <div>
                         <Link href={`/${author.username}/status/${_id}`}>
-                                <div className="w-full cursor-pointer">
+                                <div className="w-full cursor-pointer ">
                                     {text}
                         </div>
                             </Link>
