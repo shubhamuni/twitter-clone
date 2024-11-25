@@ -5,7 +5,8 @@ import PostForm from "./component/PostForm";
 import { useState, useEffect } from "react";
 import PostContent from "./component/PostContent";
 import TimeAgo from 'javascript-time-ago'
-import en from 'javascript-time-ago/locale/en';
+// import en from 'javascript-time-ago/locale/en';
+import en from 'javascript-time-ago/locale/en.json';
 import Layout from "./component/Layout";
 import { signOut } from "next-auth/react";
 

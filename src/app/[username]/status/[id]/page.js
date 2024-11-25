@@ -40,7 +40,7 @@ export default function Page({ params: asyncParams }) {
 
     // Log the updated response state
     useEffect(() => {
-        console.log('Response state updated:', respon);
+        console.log('Response state updated:', typeof(respon));
     }, [respon]);
 
     useEffect(() => {
@@ -67,12 +67,12 @@ export default function Page({ params: asyncParams }) {
                     <PostForm compact placeholder="Tweet your reply" parent={id} />
                 </div>
             )}
-            <div>
-                {respon.length && respon.map((r) => {
-                    return <div key={r._id}>
-                        <PostContent {...r} />
+            <div className="m-10">
+                {respon.length && respon.map((reply,index) => (
+                     <div key={index}>
+                        <PostContent {...reply} />
                     </div>
-                })}
+                ))}
                </div>
         </Layout>
     );
