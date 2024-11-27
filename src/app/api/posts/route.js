@@ -13,7 +13,7 @@ export async function GET(request) {
 
   try {
     const session = await getServerSession({ req: request, ...authOptions });
-    const posts = await Post.find()
+    const posts = await Post.find({parent:null })
       .populate('author') // Ensure 'author' refers to the User model
       .sort({ createdAt: -1 }) // Ensure that createdAt is properly set in the Post schema
       .limit(20)
@@ -61,7 +61,7 @@ export async function GET(request) {
 export async function POST(request) {
     await initMongoose();
     const body = await request.json();
-    const { text } = body;
+    const { text, parent } = body;
 
     
      try {
@@ -82,6 +82,7 @@ export async function POST(request) {
          const createPost = await Post.create({
              author: session.user.id,
              text,
+             parent,
          })
 
         // // Check if the user was found and updated

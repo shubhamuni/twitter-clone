@@ -7,7 +7,7 @@ import PostButtons from './PostButtons';
 export default function PostContent({ text, author, createdAt, _id, likesCount, big=false, likedByMe }) {
 
     console.log(big);
-    console.log(likedByMe)
+    console.log(likedByMe);
     
     const createdAtdate = new Date(createdAt)
     return (
@@ -30,7 +30,9 @@ export default function PostContent({ text, author, createdAt, _id, likesCount, 
                     {!big && (
                     <div>
                         <Link href={`/${author.username}/status/${_id}`}>
-                        {text}
+                                <div className="w-full cursor-pointer ">
+                                    {text}
+                        </div>
                             </Link>
                             <PostButtons id={_id} likesCount={likesCount} likedByMe={likedByMe}/>
                     </div>
