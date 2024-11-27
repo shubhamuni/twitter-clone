@@ -67,9 +67,9 @@ export default function Page({ params: asyncParams }) {
                     <PostForm compact placeholder="Tweet your reply" parent={id} />
                 </div>
             )}
-            <div className="m-10">
+            <div className="border-t border-twitterBorder">
                 {respon.length && respon.map((reply,index) => (
-                     <div key={index}>
+                     <div key={index} className="p-5 border-t border-twitterBorder">
                         <PostContent {...reply} />
                     </div>
                 ))}
